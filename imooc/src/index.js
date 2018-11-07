@@ -1,27 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux'
-// import { Provider } from 'react-redux'
+import { Provider } from 'react-redux'
 // import configStore from 'redux/store/index'
 import thunk from 'redux-thunk'
 import './index.css';
 import App from './App';
-import { counter, add, del, addAsync } from './index.redux'
+import { counter } from './index.redux'
 // import * as serviceWorker from './serviceWorker';
 const reduxDevtools = window.devToolsExtension ? window.devToolsExtension() : () => { }
 const store = createStore(counter, compose(
     applyMiddleware(thunk),
     reduxDevtools
 ))
-// const store = configStore()
 
-function render() {
-    ReactDOM.render(<App store={store} add={add} del={del} addAsync={addAsync} />, document.getElementById('root'));
-}
-render()
+// function render() {
+//     ReactDOM.render(<App store={store} add={add} del={del} addAsync={addAsync} />, document.getElementById('root'));
+// }
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>
+    ,
+    document.getElementById('root')
+)
+
+// render()
 
 // 订阅
-store.subscribe(render)
+// store.subscribe(render)
 
 // // If you want your app to work offline and load faster, you can change
 // // unregister() to register() below. Note this comes with some pitfalls.
