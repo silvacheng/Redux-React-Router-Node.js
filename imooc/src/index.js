@@ -7,22 +7,53 @@ import thunk from 'redux-thunk'
 import './index.css';
 import App from './App';
 import { counter } from './index.redux'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 // import * as serviceWorker from './serviceWorker';
 const reduxDevtools = window.devToolsExtension ? window.devToolsExtension() : () => { }
 const store = createStore(counter, compose(
-    applyMiddleware(thunk),
-    reduxDevtools
+  applyMiddleware(thunk),
+  reduxDevtools
 ))
 
 // function render() {
 //     ReactDOM.render(<App store={store} add={add} del={del} addAsync={addAsync} />, document.getElementById('root'));
 // }
+const Second = () => {
+  return <h1>Second</h1>
+}
+const Third = () => {
+  return <h1>Third</h1>
+}
+// class Test extends React.Component{
+//   render(){
+//     return(
+//       <h3>测试组件</h3>
+//     )
+//   }
+// }
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>
-    ,
-    document.getElementById('root')
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">First</Link>
+          </li>
+          <li>
+            <Link to="/second">Second</Link>
+          </li>
+          <li>
+            <Link to="/third">Third</Link>
+          </li>
+        </ul>
+        <Route path="/" exact component={App}></Route>
+        <Route path="/second" component={Second}></Route>
+        <Route path="/third" component={Third}></Route>
+      </div>
+    </BrowserRouter>
+  </Provider>
+  ,
+  document.getElementById('root')
 )
 
 // render()
